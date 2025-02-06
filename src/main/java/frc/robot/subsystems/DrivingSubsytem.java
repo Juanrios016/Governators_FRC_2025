@@ -51,10 +51,6 @@ left = new SparkMax(1, MotorType.kBrushed);
 right = new SparkMax(2, MotorType.kBrushed);
 
 differentialDrive1 = new DifferentialDrive(left, right);
- addChild("Differential Drive 1",differentialDrive1);
- differentialDrive1.setSafetyEnabled(true);
-differentialDrive1.setExpiration(0.1);
-differentialDrive1.setMaxOutput(1.0);
 
 
 
