@@ -58,7 +58,7 @@ public class DrivingCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_drivingSubsytem.drive(m_left.getAsDouble(), m_right.getAsDouble());
+        m_drivingSubsytem.drive(m_left.getAsDouble()*-1, m_right.getAsDouble()*-1);
     }
 
     // Called once the command ends or is interrupted.
