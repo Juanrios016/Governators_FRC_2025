@@ -77,8 +77,8 @@ differentialDrive1.setMaxOutput(1.0);
     // here. Call these from Commands.
 
     public void drive(double left, double right) {
-        this.right.set(right);
-        this.left.set(left);
+        this.right.set(left);
+        this.left.set(right);
     }
 
 }
