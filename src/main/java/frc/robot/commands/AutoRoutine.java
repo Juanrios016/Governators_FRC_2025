@@ -8,9 +8,9 @@ public class AutoRoutine extends SequentialCommandGroup {
     public AutoRoutine(DrivingSubsytem drive) {
 
         addCommands(
-            new DrivingCommand(()-> 1, ()-> 1, drive, 5.0, false), // Move forward 3 meters
+            new DrivingCommand(()-> 1, ()-> 1, drive, 5.0, false, 0.0), // Move forward 3 meters
             new WaitCommand(5), // Pause for stability
-            new DrivingCommand(()-> 0.5, ()-> 0.5, drive, 5.0, false)
+            new DrivingCommand(()-> 0.5, ()-> 0.5, drive, 5.0, false, 0.0)
         );
 
     }
