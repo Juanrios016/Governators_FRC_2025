@@ -29,11 +29,11 @@ public class AutoRoutine extends SequentialCommandGroup {
     
         driver.set_speed(()->-0.75,  ()->-0.0, drive, 1.5, 2.55, false),  //turning left
         // driver.set_speed(()-> 0.75,  ()->0.0, drive, 0.3, 2.55, false),  //stopping
-        driver.set_speed(()->-0.0,  ()->0.0, drive, 2.55, 2.55, false),  //stopping for 1 sec
+        driver.set_speed(()->-0.0,  ()->0.0, drive, 2.55, 2.55, false)  //stopping for 1 sec
         // driver.set_speed(()->0.0,  ()->-0.75, drive, 0.25, 2.55, false),
 
-        driver.set_speed(()->-0.75,  ()->-0.75, drive, 1.0, 2.55, false),  //going forward
-        driver.set_speed(()->0.75,  ()->0.75, drive, 1.0, 2.55, false)  //going forward
+        // driver.set_speed(()->-0.75,  ()->-0.75, drive, 1.0, 2.55, false),  //going forward
+        // driver.set_speed(()->0.75,  ()->0.75, drive, 1.0, 2.55, false)  //going forward
 
         // driver.set_speed(()->0.5,  ()->0.5, drive, 0.1, false)
 
