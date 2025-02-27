@@ -22,12 +22,12 @@ public class AutoRoutine extends SequentialCommandGroup {
         final DrivingCommand driver; //going forward
         driver =  new DrivingCommand(()->-0.0,  ()->-0.0, drive, 0.0, 0.0, false);
        addCommands(
-        driver.set_speed(()->-0.75,  ()->-0.75, drive, 3.66, 2.55, false), //going forward
+        driver.set_speed(()->-0.75,  ()->-0.75, drive, 3.76, 2.55, false), //going forward
         driver.set_speed(()->0.75,  ()->0.75, drive, 0.3, 2.55, false),  //stopping
         driver.set_speed(()->-0.0,  ()->0.0, drive, 2.55, 2.55, false),  //pausing
-        driver.set_speed(()->0.0,  ()->-0.75, drive, 0.25, 2.55, false),
+       // driver.set_speed(()->0.0,  ()->-0.75, drive, 0.25, 2.55, false), 
     
-        driver.set_speed(()->-0.75,  ()->-0.0, drive, 1.5, 2.55, false),  //turning left
+        driver.set_speed(()->-0.75,  ()->0.75, drive, 0.75, 2.55, false),  //turning left
         // driver.set_speed(()-> 0.75,  ()->0.0, drive, 0.3, 2.55, false),  //stopping
         driver.set_speed(()->-0.0,  ()->0.0, drive, 2.55, 2.55, false)  //stopping for 1 sec
         // driver.set_speed(()->0.0,  ()->-0.75, drive, 0.25, 2.55, false),
