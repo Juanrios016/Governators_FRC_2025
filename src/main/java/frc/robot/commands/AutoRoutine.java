@@ -1,17 +1,62 @@
 package frc.robot.commands;
 
+import java.util.HashMap;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.DrivingSubsytem;
 
 public class AutoRoutine extends SequentialCommandGroup {
+ 
+
     public AutoRoutine(DrivingSubsytem drive) {
 
-        addCommands(
-            new DrivingCommand(()-> 1, ()-> 1, drive, 5.0, false), // Move forward 3 meters
-            new WaitCommand(5), // Pause for stability
-            new DrivingCommand(()-> 0.5, ()-> 0.5, drive, 5.0, false)
-        );
+        /**
+         * Motor Power | Speed
+         * 0.5 -> 1.7
+         * 1.0 -> 3.4
+         * 0.75 -> 2.55
+         * 
+         */
+
+        final DrivingCommand driver; //going forward
+        driver =  new DrivingCommand(()->-0.0,  ()->-0.0, drive, 0.0, 0.0, false);
+       addCommands(
+        driver.set_speed(()->-0.75,  ()->-0.75, drive, 3.76, 2.55, false), //going forward
+        driver.set_speed(()->0.75,  ()->0.75, drive, 0.3, 2.55, false),  //stopping
+        driver.set_speed(()->-0.0,  ()->0.0, drive, 2.55, 2.55, false),  //pausing
+       // driver.set_speed(()->0.0,  ()->-0.75, drive, 0.25, 2.55, false), 
+    
+        driver.set_speed(()->-0.75,  ()->0.75, drive, 0.75, 2.55, false),  //turning left
+        // driver.set_speed(()-> 0.75,  ()->0.0, drive, 0.3, 2.55, false),  //stopping
+        driver.set_speed(()->-0.0,  ()->0.0, drive, 2.55, 2.55, false)  //stopping for 1 sec
+        // driver.set_speed(()->0.0,  ()->-0.75, drive, 0.25, 2.55, false),
+
+        // driver.set_speed(()->-0.75,  ()->-0.75, drive, 1.0, 2.55, false),  //going forward
+        // driver.set_speed(()->0.75,  ()->0.75, drive, 1.0, 2.55, false)  //going forward
+
+        // driver.set_speed(()->0.5,  ()->0.5, drive, 0.1, false)
+
+
+
+    //    new DrivingCommand(()->-0.75,  ()->-0.75, drive, 3.66, 2.55, false), //going forward
+    //     new DrivingCommand(()->0.75,  ()->0.75, drive, 0.3, 2.55, false),  //stopping
+    //     new DrivingCommand(()->-0.0,  ()->0.0, drive, 2.55, 2.55, false),  //pausing
+    //     new DrivingCommand(()->0.0,  ()->-0.75, drive, 0.25, 2.55, false),
+    
+    //     new DrivingCommand(()->-0.75,  ()->-0.0, drive, 1.5, 2.55, false),  //turning left
+    //     // new DrivingCommand(()-> 0.75,  ()->0.0, drive, 0.3, 2.55, false),  //stopping
+    //     new DrivingCommand(()->-0.0,  ()->0.0, drive, 2.55, 2.55, false),  //stopping for 1 sec
+    //     // new DrivingCommand(()->0.0,  ()->-0.75, drive, 0.25, 2.55, false),
+
+    //     new DrivingCommand(()->-0.75,  ()->-0.75, drive, 1.0, 2.55, false),  //going forward
+    //     new DrivingCommand(()->0.75,  ()->0.75, drive, 1.0, 2.55, false)  //going forward
+
+        // new DrivingCommand(()->0.5,  ()->0.5, drive, 0.1, false),
+       );
+
+    
+       
 
     }
 }
