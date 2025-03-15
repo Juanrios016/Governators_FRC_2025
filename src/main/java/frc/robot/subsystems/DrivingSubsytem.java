@@ -105,5 +105,18 @@ private DifferentialDrive differentialDrive1;
         System.out.println("-----------------------------------");
 
     }
+    public void readingEncoders() {
+        System.out.println("Velocity left: " + left.getEncoder().getVelocity());
+        // System.out.println("Velocity Right: " + right.getEncoder().getVelocity());
+        // System.out.println("-----------------------------------");
+        // System.out.println("Position left: " + left.getEncoder().getPosition());
+        // System.out.println("Position Right: " + right.getEncoder().getPosition());
+        System.out.println("------ end of testing -----");
+    }
+
+    public double getRightEncoder() {
+        return left.getEncoder().getVelocity();
+    }
+
 }
 
