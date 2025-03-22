@@ -22,17 +22,25 @@ public class MoveToLevel extends Command {
         elevator.moveToLevel(targetLevel);
     }
 
+    @Override
+    public void execute() {
+        elevator.moveToLevel(targetLevel);
+
+        // System.out.println(myDictionary);
+        // System.out.println(leftSwitch.get());
+    }
+
 
     @Override
     public boolean isFinished() {
-        return elevator.isAtCheckpoint();
+        return false;
     }
 
 
     @Override
     public void end(boolean interrupted) {
         elevator.stop();
-        elevator.resetCheckpointFlag();
+
     }
 }
 
