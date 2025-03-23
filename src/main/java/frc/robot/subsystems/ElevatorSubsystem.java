@@ -3,143 +3,159 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
-
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
 
 public class ElevatorSubsystem extends SubsystemBase {
     private final SparkMax motor;
-    // private final DigitalInput limitSwitch;
-    private final Stack<Integer> heightStack;
-
-
     private final double powerUp = -0.5;
     private final double powerDown = 0.5;
-
-
-    private boolean previousState;
-    private boolean switchLimit;
-    private boolean newState;
-
-
-    private int currLevel;
-    private boolean checkpointReached;
-    Map<String, Boolean> myDictionary;
+    private Map<String, Boolean> myDictionary;
+    private Map<String, Boolean> myDictionary2;
+    
 
     private final DigitalInput leftSwitch = new DigitalInput(0);
     private final DigitalInput rightSwitch = new DigitalInput(1);
 
 
-
     public ElevatorSubsystem() {
         motor = new SparkMax(6, MotorType.kBrushed);
-        // limitSwitch = new DigitalInput(0);
-        heightStack = new Stack<>();
 
         myDictionary = new HashMap<>();
         myDictionary.put("L1", false);
         myDictionary.put("L2", false);
         myDictionary.put("L3", false);
+
+        myDictionary2 = new HashMap<>();
+        myDictionary2.put("L1", false);
+        myDictionary2.put("L2", false);
+        myDictionary2.put("L3", false);
     }
 
-
-    public void moveToL1() {
-        if (leftSwitch.get() && rightSwitch.get()) {
-            motor.set(-0.5);
-        } 
-
-        if (leftSwitch.get() == false){
-            motor.set(0.0);
-            myDictionary.put("L1", true);
-
+    public Boolean moveToL1() {
+        if (myDictionary.get("L1") == false && myDictionary2.get("L1") == false) {
+            if (leftSwitch.get() && rightSwitch.get()) {
+                motor.set(-0.5);
+            } 
+            if (leftSwitch.get() == false){
+                motor.set(0.0);
+                myDictionary.put("L1", true);
+                return true;
+            }
         }
 
+        else if (myDictionary.get("L1") == true && myDictionary2.get("L1") == false) {
 
-
-    }
-
-    public void moveToL2() {
-        if (!leftSwitch.get() && rightSwitch.get() || leftSwitch.get() && rightSwitch.get()) {
-            motor.set(-0.5);
-        } 
-        // else if(myDictionary.get("L1") == false && myDictionary.get("L2") == false){
-        //     motor.set(powerUp);
-
-        // }
-
-        else if (rightSwitch.get() == false  || myDictionary.get("L2") == true){
-            motor.set(0.0);
-            myDictionary.put("L2", true);
-            myDictionary.put("L1", true);
+            if (leftSwitch.get() == false && myDictionary2.get("L3") == false) {
+                myDictionary2.put("L3", true);
+                motor.set(powerDown);
+            }
+            else if (rightSwitch.get() == false && myDictionary2.get("L2") == false) {
+                myDictionary2.put("L2", true);
+            }
+            else if (leftSwitch.get() == false && myDictionary2.get("L2") == true) {
+                motor.set(0);
+                myDictionary2.put("L1", true);
+                resetDown();
+                return true;
+            }
+            else if (myDictionary.get("L1") == true && myDictionary2.get("L1") == false){
+                motor.set(powerDown);
+            }
         }
-
-
-        // System.out.println(leftSwitch.get());
-
-
-
-
-
+        return false;
     }
 
-    public void moveToL3() {
-        if (leftSwitch.get() == true && rightSwitch.get() == false && myDictionary.get("L3") == false || leftSwitch.get() == true && rightSwitch.get() == true ) {
-            motor.set(-0.5);
-            System.out.println("entrooooooooo");
+    public Boolean moveToL2() {
 
-        } 
-
-        // else if(myDictionary.get("L1") == false && myDictionary.get("L2") == false && myDictionary.get("L3") ==  false){
-        //     motor.set(powerUp);
-        //     System.out.println("SIUUUUUUUU");
-
-        // }
-
-        else if (leftSwitch.get() == false  || myDictionary.get("L3")){
-            motor.set(0.0);
-            myDictionary.put("L3", true);
-            myDictionary.put("L2", true);
-            myDictionary.put("L1", true);
-
+        if (myDictionary.get("L2") == false && myDictionary2.get("L2") == false) {
+            if (!leftSwitch.get() && rightSwitch.get() || leftSwitch.get() && rightSwitch.get()) {
+                motor.set(-0.5);
+            } 
+            else if (rightSwitch.get() == false  || myDictionary.get("L2") == true){
+                motor.set(0.0);
+                myDictionary.put("L2", true);
+                myDictionary.put("L1", true);
+                return true;
+            }
         }
+        else if (myDictionary.get("L2") == true && myDictionary2.get("L2") == false) {
+            if (leftSwitch.get() == false && rightSwitch.get() == true) {
+                myDictionary.put("L3", false);
+                myDictionary2.put("L3", false);
+                motor.set(powerDown);
+            } 
+            else if (rightSwitch.get() == false) {
+                motor.set(0);
+                myDictionary2.put("L2", true);
+                return true;
 
+            }
+        }
+        return false;
+        
+    }
 
+    public Boolean moveToL3() {
 
+        if (myDictionary.get("L3") == false) {
+            
+            if (!leftSwitch.get() && myDictionary.get("L1") == false || !leftSwitch.get() && myDictionary.get("L2") == false){
+                myDictionary.put("L1", true);
+                motor.set(powerUp);
+            }
+            else if ( !rightSwitch.get() ) {
+                motor.set(powerUp);
+                myDictionary.put("L2", true);
+            }
+            else if (leftSwitch.get() && rightSwitch.get()){
+                motor.set(powerUp);
+            }
+            else if (!leftSwitch.get() && myDictionary.get("L2") == true ) {
+                motor.set(0);
+                myDictionary.put("L3", true);
+                resetUp();
+                return true;
+            }
+        }
+        return false;
+    }
 
-
+    private void resetDown() {
+        System.out.println("Reseting status");
+            
+        myDictionary.put("L2", false);
+        myDictionary.put("L3", false);
+        
+        myDictionary2.put("L1", false);
+        myDictionary2.put("L2", false);
+        myDictionary2.put("L3", false);
 
     }
 
-    public void setL1True(){
-        myDictionary.put("L1", true);
-    }
-
-    public void setL2True(){
+    private void resetUp() {
+        System.out.println("Reseting status");
+            
         myDictionary.put("L2", true);
-    }
-
-    public void setL3True(){
         myDictionary.put("L3", true);
+        
+        myDictionary2.put("L1", false);
+        myDictionary2.put("L2", false);
+        myDictionary2.put("L3", false);
+
     }
 
-    public void moveToLevel(int level){
-        if (level == 1) moveToL1();
-        else if (level == 2) moveToL2();
-        else if (level == 3) moveToL3();
+    public Boolean moveToLevel(int level){
+        boolean status = false;
 
-        else if (level == 0) moveDown();
-        else if (level == 4) setL1True();
-        else if (level == 5) setL2True();
-        else if (level == 6) setL3True();
+        if (level == 1) status = moveToL1();
+        else if (level == 2) status = moveToL2();
+        else if (level == 3)status =  moveToL3();
 
-
-
+        return status;
     }
 
     public void moveDown() {
@@ -149,13 +165,17 @@ public class ElevatorSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
 
-        System.out.println(myDictionary);
-        // System.out.println(leftSwitch.get());
+        // long currentTime = System.currentTimeMillis();
+        // if (currentTime - lastPrintTime >= 1000) {
+        //     System.out.println("Up Status: " + myDictionary);
+        //     System.out.println("Down Status: " + myDictionary2);
+
+        //     lastPrintTime = currentTime;
+        // }
+
     }
 
-
     public void stop() {
-        // TODO Auto-generated method stub
         motor.set(0);
     }
 }

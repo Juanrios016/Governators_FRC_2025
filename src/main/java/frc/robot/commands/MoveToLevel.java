@@ -19,12 +19,11 @@ public class MoveToLevel extends Command {
 
     @Override
     public void initialize() {
-        elevator.moveToLevel(targetLevel);
     }
 
     @Override
     public void execute() {
-        elevator.moveToLevel(targetLevel);
+        // elevator.moveToLevel(targetLevel);
 
         // System.out.println(myDictionary);
         // System.out.println(leftSwitch.get());
@@ -33,7 +32,7 @@ public class MoveToLevel extends Command {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return elevator.moveToLevel(targetLevel);
     }
 
 
