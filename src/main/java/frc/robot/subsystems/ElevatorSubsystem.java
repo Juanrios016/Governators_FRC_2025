@@ -15,7 +15,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final double powerDown = 0.5;
     private Map<String, Boolean> myDictionary;
     private Map<String, Boolean> myDictionary2;
-    
+    private boolean controlManually = false;
 
     private final DigitalInput leftSwitch = new DigitalInput(0);
     private final DigitalInput rightSwitch = new DigitalInput(1);
@@ -150,17 +150,39 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public Boolean moveToLevel(int level){
         boolean status = false;
-
-        if (level == 1) status = moveToL1();
-        else if (level == 2) status = moveToL2();
-        else if (level == 3)status =  moveToL3();
+        if (controlManually == false){
+            if (level == 1) status = moveToL1();
+            else if (level == 2) status = moveToL2();
+            else if (level == 3)status =  moveToL3();
+        }
+        else{
+            if (level == 1) status = moveDown();
+            else if (level == 2) status = stop();
+            else if (level == 3)status =  moveUp();
+        }
 
         return status;
     }
 
-    public void moveDown() {
-        motor.set(0.4);
+    public void manualElevator() {
+        controlManually = !controlManually;
     }
+
+    public Boolean moveDown() {
+        motor.set(powerDown);
+        return false;
+    }
+
+    public Boolean moveUp() {
+        motor.set(powerUp);
+        return false;
+    }
+
+    public Boolean stop() {
+        motor.set(0);
+        return true;
+    }
+
 
     @Override
     public void periodic() {
@@ -175,9 +197,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     }
 
-    public void stop() {
-        motor.set(0);
-    }
+
 }
 
 
