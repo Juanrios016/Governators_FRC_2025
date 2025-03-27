@@ -13,10 +13,16 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSink;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -30,6 +36,11 @@ public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
     private RobotContainer m_robotContainer;
+    UsbCamera camera1;
+    UsbCamera camera2;
+    VideoSink server;
+    XboxController xbox = new XboxController(0);
+    boolean switchCamera = false;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -40,8 +51,11 @@ public class Robot extends TimedRobot {
         // autonomous chooser on the dashboard.
         m_robotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
-        enableLiveWindowInTest(true);
-        CameraServer.startAutomaticCapture();
+        enableLiveWindowInTest(true);    
+        
+        camera1 = CameraServer.startAutomaticCapture(0);
+        camera2 = CameraServer.startAutomaticCapture(1);
+        server = CameraServer.getServer();
     }
 
     /**
@@ -58,6 +72,17 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+        if (xbox.getBButton()) {
+            switchCamera = !switchCamera;
+        }
+
+        if (switchCamera) {
+            System.out.println("Setting camera 2");
+            server.setSource(camera1);
+        } else if (!switchCamera) {
+            System.out.println("Setting camera 1");
+            server.setSource(camera2);
+        }
     }
 
 
@@ -83,6 +108,7 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
         }
+
     }
 
     /**
@@ -101,6 +127,7 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
+
     }
 
     /**
@@ -108,6 +135,10 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+
+        
+
+
     }
 
     @Override

@@ -11,8 +11,8 @@ import com.revrobotics.spark.SparkMax;
 
 public class ElevatorSubsystem extends SubsystemBase {
     private final SparkMax motor;
-    private final double powerUp = -0.5;
-    private final double powerDown = 0.5;
+    private final double powerUp = -0.75;
+    private final double powerDown = 0.75;
     private Map<String, Boolean> myDictionary;
     private Map<String, Boolean> myDictionary2;
     private boolean controlManually = false;
@@ -183,6 +183,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         return true;
     }
 
+    public Boolean getControlManually() {
+        return controlManually;
+    }
+
 
     @Override
     public void periodic() {
@@ -193,8 +197,13 @@ public class ElevatorSubsystem extends SubsystemBase {
         //     System.out.println("Down Status: " + myDictionary2);
 
         //     lastPrintTime = currentTime;
+
+
+
         // }
 
+
+        System.out.println(controlManually);
     }
 
 

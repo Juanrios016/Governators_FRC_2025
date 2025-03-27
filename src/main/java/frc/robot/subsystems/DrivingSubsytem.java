@@ -98,8 +98,8 @@ public class DrivingSubsytem extends SubsystemBase {
             this.right.set(right);
             this.left.set(left);
         } else {
-            this.right.set(-1 * right);
-            this.left.set(-1 *left);
+            this.right.set(left);
+            this.left.set(right);
         }
 
     }
