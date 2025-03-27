@@ -2,18 +2,16 @@ package frc.robot.commands;
 
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.PneumaticsSubsystem;
 
 
-public class MoveToLevel extends Command {
-    private final ElevatorSubsystem elevator;
-    private final int targetLevel;
+public class PneumaticsCommand extends Command {
+    private final PneumaticsSubsystem pneumaticsSystem;
 
 
-    public MoveToLevel(ElevatorSubsystem elevator, int targetLevel) {
-        this.elevator = elevator;
-        this.targetLevel = targetLevel;
-        addRequirements(elevator);
+    public PneumaticsCommand(PneumaticsSubsystem pneumaticsSystem) {
+        this.pneumaticsSystem = pneumaticsSystem;
+        addRequirements(pneumaticsSystem);
     }
 
 
@@ -27,18 +25,18 @@ public class MoveToLevel extends Command {
 
         // System.out.println(myDictionary);
         // System.out.println(leftSwitch.get());
+        pneumaticsSystem.releaseCoral();
     }
 
 
     @Override
     public boolean isFinished() {
-        return elevator.moveToLevel(targetLevel);
+        return true;
     }
 
 
     @Override
     public void end(boolean interrupted) {
-        elevator.stop();
 
     }
 

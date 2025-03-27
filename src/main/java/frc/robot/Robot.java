@@ -77,10 +77,10 @@ public class Robot extends TimedRobot {
         }
 
         if (switchCamera) {
-            System.out.println("Setting camera 2");
+            // System.out.println("Setting camera 2");
             server.setSource(camera1);
         } else if (!switchCamera) {
-            System.out.println("Setting camera 1");
+            // System.out.println("Setting camera 1");
             server.setSource(camera2);
         }
     }

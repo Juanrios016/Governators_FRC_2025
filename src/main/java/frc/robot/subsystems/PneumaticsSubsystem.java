@@ -13,7 +13,7 @@ public class PneumaticsSubsystem extends SubsystemBase {
     private boolean isExtended = false;
     
     
-    public PneumaticsSubsystem() { }
+    public PneumaticsSubsystem() { solenoid.set(true);}
 
     public void extendSolenoid() {
         isExtended = true;

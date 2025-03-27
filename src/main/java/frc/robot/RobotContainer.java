@@ -41,7 +41,7 @@ public class RobotContainer {
     public final XboxController xbox = new XboxController(0);
     public final PneumaticsSubsystem pneumatic = new PneumaticsSubsystem();
     private final ElevatorSubsystem elevatorSystem = new ElevatorSubsystem();
-    public final AutoRoutine auto = new AutoRoutine(m_drivingSubsytem, elevatorSystem);
+    public final AutoRoutine auto = new AutoRoutine(m_drivingSubsytem, elevatorSystem, pneumatic);
 
     // Joysticks
 
